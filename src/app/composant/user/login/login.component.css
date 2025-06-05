@@ -1,0 +1,17 @@
+body{
+    background-image: url(/assets/login/img/Sama.jpg);
+}
+.container{
+    
+    text-decoration-color: bisque;
+}
+.margin-top{
+    margin-top: 60px;
+}
+.txt-color{
+    color:white;
+}
+.bg-color{
+    background-color:blue;
+}
+

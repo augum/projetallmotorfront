@@ -1,0 +1,95 @@
+
+<br>
+<mat-toolbar color="dark"></mat-toolbar>
+<br>
+<mat-toolbar color="dark">
+  <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
+    <ul fxLayout fxLayoutGap="15px" class="navigation-items">
+         <li class="nav-link">
+            <a class="btn btn-sm btn-success text-white pull-right" (click)="onCreate()">
+                <i class="fa fa-plus"></i>New product</a>
+        </li>
+      
+    </ul>
+ </div>
+</mat-toolbar>
+   <mat-toolbar color="dark">  
+    <div>
+      <br>
+        <form [formGroup]="formtemplate" (submit)="chercher(formtemplate.value)"> 
+            <div class="form-group">
+                <div class="form-group">
+                    <div class="form-group">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Magasin</mat-label>
+                            <mat-select class="form-control" formControlName="mag" >
+                              <mat-option *ngFor="let p of magasins._embedded.magasins" [value]="p.id">{{p.libelle}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                    </div>
+                </div>
+                <label>Article</label>
+                <div class="form-inline form-group">
+                <input  type="text"  class="form-control" formControlName="nom"  placeholder="intitulé de l'article">
+                <button type="submit" class="btn btn-success ml-2">VALIDATED</button>
+              </div>
+            </div>
+          </form>
+    </div>   
+  </mat-toolbar>
+  <mat-toolbar color="dark">
+    
+  </mat-toolbar>
+  <br>
+ <div  *ngIf="articles else loading" class="pricing-header mx-auto"> 
+   <div class="table-responsive">
+    <table class="table table-bordered table-responsive-sm table-responsive-md table-responsive-lg">
+    <thead>
+    <tr>
+    <th scope="col">Libelle </th>
+    <th scope="col">Prix Vente </th>
+    <th scope="col">Qté seuil </th>
+    <th scope="col">Stock initial </th>
+    <th scope="col">Dernière Qté ajoutée</th>
+    <th scope="col">Stock actuelle </th>
+    <th scope="col">TVa </th>
+    <th scope="col">Qte à ajouter</th>
+    
+    
+    <th scope="col">Editer </th>
+    <th scope="col">Delete </th>
+    
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let article of articles | paginate: { itemsPerPage: 50, currentPage: p } ">
+    <td ><input type="text" [(ngModel)]='article.libelle' class="form-control"></td>
+    <td width="10">{{article.pv}}</td>
+    <td width="10"><button >{{article.fodec}}</button></td>
+    <td width="10">{{article.stkinit}}</td>
+    <td width="10">{{article.stkajouter}}</td>
+    <td width="10"><button [ngClass]= "article.dispo==true?'btn btn-success':'btn btn-danger'" >{{article.stock}}</button></td>
+    <td width="10"><input type="text" [(ngModel)]='article.tva' class="form-control"></td>
+    <td width="20"><input type="number" [(ngModel)]='qte' class="form-control" ></td>
+    
+    <td width="10"><button class="btn btn-warning btn btn-outline-dark ml-1" (click)="modifier(article)">
+      <i  >Update</i></button>
+    </td>
+    <td>
+      <a class="btn btn-danger btn btn-outline-dark ml-1 text-danger" (click)="onDelete(article.id)"><i class="fa fa-trash fa-lg" >
+        Delete
+      </i> 
+     </a >
+      </td>
+    </tr>
+    </tbody>
+    </table>
+  </div>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+ </div>
+ <ng-template #loading>
+  <div>Loading...</div>
+ </ng-template>
+
+

@@ -1,0 +1,42 @@
+<mat-toolbar color="dark"></mat-toolbar>
+<div class="row">
+    <div class="col-md-6 col-lg-6">
+       <h1>Paiement facture</h1>
+
+       <div class="form-group">
+        <input  class="form-control" [(ngModel)]="data.numero" readonly >
+      </div>
+       <div class="form-group">
+            <label>Date</label>
+            <input matInput class="form-control" [(ngModel)]="data.date" readonly >
+        </div>
+        
+        <div class="form-group">
+            <label>Nom du client</label>
+            <input type="text" matInput class="form-control" [(ngModel)]="data.lib_client" readonly >
+        </div>
+        <div class="form-group">
+            <label>Total à payer</label>
+            <input type="number" matInput class="form-control" [(ngModel)]="data.totttc" readonly >
+        </div>
+        <div class="form-group">
+            <label>Montant payé</label>
+            <input type="number" matInput class="form-control" [(ngModel)]="data.mt" readonly >
+        </div>
+        <div class="form-group">
+            <label>Reste à payer</label>
+            <input type="number" matInput class="form-control" [(ngModel)]="data.reste" readonly >
+        </div>
+        <div class="form-group">
+            <label>Motif</label>
+            <input type="text" matInput class="form-control" [(ngModel)]="motif" >
+        </div>
+        <div class="form-group">
+            <label>Montant</label>
+            <input type="number" matInput class="form-control" [(ngModel)]="qte" >
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success" (click)="modifier()">VALIDER</button>
+        </div> 
+    </div>  
+</div>

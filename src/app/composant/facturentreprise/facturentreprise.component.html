@@ -1,0 +1,72 @@
+<mat-toolbar color="dark"></mat-toolbar>
+<mat-toolbar color="dark">
+    <div fxHide.gt-xs>
+        <button mat-icon-button >
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+    <div>
+      
+     FACTURE POUR ENTREPRISE
+    </div>
+    
+  </mat-toolbar>
+  
+<form [formGroup]="formtemplate" (submit)="chercher(formtemplate.value)"> 
+    <div class="form-group col-md-3">
+        <label><strong>Date début: </strong></label>
+        <input  type="date"  class="form-control" formControlName="date1" >
+        <div class="text-danger" *ngIf="isSubmitted && formControls.date1.errors?.required">Champ obligatoire.</div>
+    </div>
+    <div class="form-group col-md-3">
+        <label><strong>Date fin: </strong></label>
+        <input  type="date"  class="form-control" formControlName="date2" >
+        <div class="text-danger" *ngIf="isSubmitted && formControls.date2.errors?.required">Champ obligatoire.</div>
+    </div>
+    <div class="form-group col-md-3">
+        <label><strong>Convention: </strong></label>
+        <select class="form-control" formControlName="entreprise">
+            <option value="0">-select-</option>
+            <option *ngFor="let client of clients" value="{{client.libelle}}">{{client.libelle}}</option>
+        </select>
+        <div class="text-danger" *ngIf="isSubmitted && formControls.entreprise.errors?.required">Champ obligatoire.</div>
+    </div>
+    
+    <div class="form-group col-md-3">
+        
+    <br>
+        <button type="submit" class="btn btn-success">VALIDATED</button>
+    </div> 
+</form>
+<table class="table table-hover">
+    <thead class="thead-light">
+    
+    <th>Désignation</th>  
+    <th>PU</th>
+    <th>Qte</th>
+    <th>Total Ht</th>
+    <th>
+    </thead>
+    <tbody>
+    <tr *ngFor="let article of articles | paginate: { itemsPerPage:5, currentPage: p }">
+    <td>{{article.libart}}</td>
+    <td>{{article.pu}}</td>
+    <td>{{article.qte}}</td>
+    <td>{{article.totht}}</td>
+    <td>
+    </tr>
+    <div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="dataTable_info" 
+    role="status" aria-live="polite"></div></div><div class="col-sm-12 col-md-7">
+    <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+      <ul class="pagination"></ul></div></div></div>
+    </tbody>
+    </table>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    
+    <div class="form-group col-md-4" *ngIf="somme">
+    
+        <button class="btn btn-success"><strong>TOTAL: {{somme}} CDF</strong></button>        
+    </div>
+    <div fxLayoutAlign="end">
+        <button class="btn btn-dark text-white" (click)="print()" ><h2><i class="fa fa-print "></i>Imprimer</h2></button>
+      </div>

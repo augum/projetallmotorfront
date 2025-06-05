@@ -1,0 +1,75 @@
+<mat-toolbar color="dark"></mat-toolbar>
+<mat-toolbar color="dark">
+    <div fxHide.gt-xs>
+        <button mat-icon-button >
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+    <div>
+        <!--<button class="btn btn-danger" (click)="print()">
+          <i class="fa fa-print "></i></button>-->
+       <h2>DETAIL DE VENTE</h2>
+    </div>
+    
+  </mat-toolbar>
+  <div *ngIf="rapport">
+    <mat-toolbar color="dark">
+        
+    </mat-toolbar>
+    
+    <form [formGroup]="formtemplate" (submit)="chercher(formtemplate.value)"> 
+        <div class="form-group col-md-3">
+            <label><strong>Date début: </strong></label>
+            <input  type="date"  class="form-control" formControlName="date1" >
+            <div class="text-danger" *ngIf="isSubmitted && formControls.date1.errors?.required">Champ obligatoire.</div>
+        </div>
+        <div class="form-group col-md-3">
+            <label><strong>Date fin: </strong></label>
+            <input  type="date"  class="form-control" formControlName="date2" >
+            <div class="text-danger" *ngIf="isSubmitted && formControls.date2.errors?.required">Champ obligatoire.</div>
+        </div>
+        <div class="form-group col-md-3">
+            <label><strong>Boutique: </strong></label>
+            <select class="form-control" formControlName="magasin">
+                <option value="0">-select-</option>
+                <option *ngFor="let magasin of magasins._embedded.magasins" value="{{magasin.id}}">{{magasin.libelle}}</option>
+            </select>
+            <div class="text-danger" *ngIf="isSubmitted && formControls.magasin.errors?.required">Champ obligatoire.</div>
+            
+        </div> 
+        <div class="form-group col-md-3">
+            
+            <button type="submit" class="btn btn-success">VALIDATED</button>
+        </div>
+    </form>
+    
+    <table class="table table-hover">
+    <thead class="thead-light">
+    
+    <th>Numero</th>
+    <th>Article</th>
+    <th>Prix unit</th>
+    <th>Qte</th>
+    <th>Mode paiement</th>
+    <th>Date</th> 
+    
+    <th>
+    </thead>
+    <tbody>
+    <tr *ngFor="let comm of commandeListe ">
+    <td>{{comm.numero}}</td>
+    <td>{{comm.libart}}</td>
+    <td>{{comm.pu}}</td>
+    <td>{{comm.qte}}</td>
+    <td >{{comm.modePayement}}</td>
+    <td>{{comm.date| date:'dd/MM/yyyy'}}</td>
+    </tr>
+    <div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="dataTable_info" 
+    role="status" aria-live="polite"></div></div><div class="col-sm-12 col-md-7">
+    <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+      <ul class="pagination"></ul></div></div></div>
+    </tbody>
+    </table>
+     <!--<pagination-controls (pageChange)="p = $event"></pagination-controls>--> 
+  </div>
+  

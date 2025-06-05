@@ -1,0 +1,79 @@
+<mat-toolbar color="dark"></mat-toolbar>
+<mat-toolbar color="dark">
+    <div fxHide.gt-xs>
+        <button mat-icon-button >
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+    <div>
+      
+     <h2>RAPPORT DE VENTE</h2>
+    </div>
+    
+  </mat-toolbar>
+  <div>
+    <div fxLayoutAlign="start" >
+      <form [formGroup]="formtemplate" (submit)="chercherNum(formtemplate.value)"> 
+        <div class="form-group">
+            <input type="text" class="form-control" formControlName="numero" placeholder="nom du client"> 
+            
+        </div>
+        <button type="submit" class="btn btn-success ml-2">CHERCHER</button> 
+      </form>
+    </div> 
+    <br>
+    <div fxLayoutAlign="start">
+      <form [formGroup]="formtemplate" (submit)="chercherDate(formtemplate.value)"> 
+        <div class="form-group">
+            <input type="date" class="form-control" formControlName="date">  
+        </div>
+        <button type="submit" class="btn btn-success ml-2">VALIDER</button> 
+      </form>
+    </div>
+  </div>
+
+<table class="table table-hover">
+<thead class="thead-light">
+<th>numero</th>  
+<th>Date commande</th>
+<th>Code client</th>
+<th>Désignation client</th>
+<th>Total Ht</th>
+<th>Total Tva</th>
+<th>Total TTC</th>
+<th>Montant payé</th>
+<th>Reste à payer</th>
+
+</thead>
+<tbody>
+<tr *ngFor="let comm of commandeListe | paginate: { itemsPerPage:5, currentPage: p }">
+<td>{{comm.numero}}</td>
+<td>{{comm.date| date:'dd/MM/yyyy'}}</td>
+<td>{{comm.code_client}}</td>
+<td>{{comm.lib_client}}</td>
+<td >{{comm.totht}}</td>
+<td >{{comm.tottva}}</td>
+<td >{{comm.totttc}}</td>
+<td >{{comm.mt}}</td>
+<td >{{comm.reste}}</td>
+<td>
+<!--<a class="btn text-danger" (click)="onDelete(comm.id)"><i class="fa fa-trash fa-lg" >
+
+</i> </a >-->
+<a class="btn text-danger" (click)="onSelect(comm)"><i class="fa fa-tags">
+
+</i> 
+</a>
+</td>
+</tr>
+<div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="dataTable_info" 
+role="status" aria-live="polite"></div></div><div class="col-sm-12 col-md-7">
+<div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+  <ul class="pagination"></ul></div></div></div>
+</tbody>
+</table>
+<pagination-controls (pageChange)="p = $event"></pagination-controls> 
+
+
+
+

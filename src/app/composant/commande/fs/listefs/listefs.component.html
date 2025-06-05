@@ -1,0 +1,41 @@
+<mat-toolbar color="dark"></mat-toolbar>
+   <mat-toolbar color="dark">
+    <form [formGroup]="formtemplate" (submit)="getfs(formtemplate.value)"> 
+
+      <div class="form-group">
+          
+          <input  type="text"  class="form-control" formControlName="numero"  placeholder="Numero de la facture">
+          
+          <button type="submit" class="btn btn-success">VALIDATED</button>
+      </div>
+  </form>
+  </mat-toolbar>
+  <div *ngIf="listefs" class="pricing-header mx-auto">
+    <div class="table-responsive">
+     <table class="table table-bordered table-responsive-sm table-responsive-md table-responsive-lg">
+     <thead>
+     <tr>
+     <th scope="col">ARTICLE</th>
+     <th scope="col">PU</th>
+     <th scope="col">QTE</th>
+     <th scope="col">TOTAL HT</th>
+     <th scope="col">TVA</th>
+     <th scope="col">TOTAL TTC</th>
+     
+     </tr>
+     </thead>
+     <tbody>
+ 
+     <tr *ngFor="let comm of listefs | paginate: { itemsPerPage: 10, currentPage: p }">
+     <td>{{comm.libart}}</td>
+     <td>{{comm.pu}}</td>
+     <td>{{comm.qte}}</td>
+     <td>{{comm.totht}}</td>
+     <td>{{comm.tva}}</td>
+     <td>{{comm.totttc}}</td>
+     </tr>
+     </tbody>
+     </table>
+   </div>
+   <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>

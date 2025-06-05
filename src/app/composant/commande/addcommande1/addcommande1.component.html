@@ -1,0 +1,164 @@
+
+<mat-toolbar color="dark"></mat-toolbar>
+<div class="container-fluid">
+    <div>
+      <mat-toolbar color="dark">
+    
+        <div >
+        <h1 >MODIFICATION FACTURATION</h1> 
+        </div>
+        
+      </mat-toolbar>
+      <div fxLayoutAlign="start">
+        <button type="button" class="btn btn-danger" (click)="retour()"><i class="fa fa-database"></i>Retour</button>
+      </div>
+      <div fxLayoutAlign="end" >
+        <fieldset>
+          <legend>Choisir la monnaie</legend>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="monaie" (click)="monaie2()" >
+          <label class="form-check-label" for="exampleRadios1">
+          USD
+         </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="monaie" (click)="monaie1()">
+          <label class="form-check-label" for="exampleRadios1">
+           CDF
+         </label>
+        </div>
+      </fieldset>
+      </div> 
+    <form [formGroup]="this.service.formData" (ngSubmit)="onSubmit()" >
+      <br>
+      <div fxLayoutAlign="end">
+       
+        <button class="btn btn-primary" type="submit"><h2><i>IMPRIMER</i></h2></button>
+      </div>
+      
+      <div class="form-group col-md-6">
+        <label><strong>Num Commande : </strong></label>
+        <input  type="text"  class="form-control" formControlName="numero" id="numero" readonly>
+        <div *ngIf="isentreprise">
+          <label>Entreprise</label>
+          <select name="code_client" class="form-control" formControlName="code_client" id="code_client" 
+          (change)="OnSelectClient($event.target)">
+          <option value="0">-Select-</option>
+          <option *ngFor="let client of this.ClientList" value="{{client.code}}">{{client.libelle}}</option>
+          </select>
+        </div>
+        <div *ngIf="isSite">
+          <label>Point de vente</label>
+          <select name="code_mag" class="form-control" formControlName="code_client" id="code_mag" 
+          (change)="OnSelectMag($event.target)">
+          <option value="0">-Select-</option>
+          <option *ngFor="let magasin of magasins" value="{{magasin.id}}">{{magasin.libelle}}</option>
+          </select>
+        </div>
+        <div>
+          <label><strong>Nom Client : </strong></label>
+          <input  type="text"  class="form-control" formControlName="lib_client" id="lib_client" >
+        </div>
+      </div> 
+      
+     <div fxLayoutAlign="end">
+       <fieldset>
+         <legend>Choisir le mode de paiement</legend>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="modepayement" formControlName="modepayement" id="exampleRadios1" value="cash" (click)="verrou1()" checked>
+        <label class="form-check-label" for="exampleRadios1">
+         Cash
+      </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="modepayement" formControlName="modepayement" id="inlineRadio2" value="mobil money" (click)="verrou1()">
+        <label class="form-check-label" for="inlineRadio2">Mobil money</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="modepayement" formControlName="modepayement" id="inlineRadio3" value="banque" (click)="verrou1()" >
+        <label class="form-check-label" for="inlineRadio3">Banque</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="modepayement" formControlName="modepayement" id="inlineRadio3" value="credit" (click)="verrou2()" >
+        <label class="form-check-label" for="inlineRadio3">Crédit</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="modepayement" formControlName="modepayement" id="inlineRadio3" value="convention" (click)="verrou()">
+        <label class="form-check-label" for="inlineRadio3">Conventionné</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="modepayement" formControlName="modepayement" id="inlineRadio3" value="point de vente" (click)="verrou3()">
+        <label class="form-check-label" for="inlineRadio3">Point de vente </label>
+      </div>
+     </fieldset>
+     </div>
+      
+      <table class="table table-borderless">
+        <thead class="thead-light">
+          <th>Code_article</th>
+          <th>Article</th>
+          <th>Pu</th>
+          <th>Quantite</th>
+          <th>Tva</th>
+          <th>Total Ht</th>
+          <th>
+            <a class="btn btn-sm btn-success text-white" (click)="AddData(null,1)">
+                <i class="fa fa-plus"></i>Ajouter </a>
+          </th>
+        </thead>
+        <tbody>
+            <tr *ngIf="service.list.length==0" 
+             [class.text-danger]="!isValid && service.list.length ==0">
+                <td class="font-italic text-center" colspan="5">
+                  Aucune Commande sélectionnée ...
+                </td>
+              </tr>
+          <tr *ngFor="let item of service.list;let i=index;">
+          <td>{{item.code_article}}</td>  
+          <td>{{item.libart}}</td>
+          <td>{{item.pu}}</td>
+          <td>{{item.qte}}</td>
+          <td>{{item.tva}}</td>
+          <td>{{item.totht}}</td> 
+          <td>{{item.local}}</td>
+          <td>{{item.idMagasin}}</td>
+          <td>{{item.date}}</td>
+          <td>
+              <a class="btn btn-sm btn-info text-white" (click)="AddData(i,1)">
+                  <i class="fa fa-pencil"></i></a>
+              <a class="btn btn-sm btn-danger text-white ml-1" (click)="onDelete(item,item.id,i)">
+                  <i class="fa fa-trash"></i></a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="form-group row">
+            <div class="col-sm-3 mb-3 mb-sm-0">
+            <div class="form-group">
+                <label>Total Ht : </label>
+                <input type="text" class="form-control" id="totht" formControlName="totht" readonly [(ngModel)]="tht">
+            </div>
+            </div> 
+            <div class="col-sm-3 mb-3 mb-sm-0" >
+            <div class="form-group" >
+                <label>Total Tva  : </label>
+                <input type="text" class="form-control" id="tottva" formControlName="tottva" readonly>
+            </div>
+            </div>
+            <div class="col-sm-3 mb-3 mb-sm-0" >
+            <div class="form-group">
+            <label>Total TTC / Montant à payer : </label>
+            <input type="text" class="form-control" id="totttc" formControlName="totttc" readonly [(ngModel)]="ttc">
+            </div>
+            </div> 
+            <div class="col-sm-3 mb-3 mb-sm-0" *ngIf="credit">
+              <div class="form-group ">
+                <label>Montant Payé : </label>
+                <input type="number" class="form-control" id="mt" formControlName="mt" [(ngModel)]="mt">
+              </div>
+            </div>
+                   
+         </div>
+    </form> 
+    </div>
+</div>

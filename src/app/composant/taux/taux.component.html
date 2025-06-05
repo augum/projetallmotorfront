@@ -1,0 +1,34 @@
+<mat-toolbar color="dark"></mat-toolbar>
+  <mat-toolbar color="dark">
+    <div fxHide.gt-xs>
+        <button mat-icon-button >
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+    <div>
+      Taux
+    </div>
+    
+  </mat-toolbar>
+ <div class="pricing-header mx-auto">
+   <div class="table-responsive">
+    <table class="table table-bordered table-responsive-sm table-responsive-md
+   table-responsive-lg">
+    <thead>
+    <tr>
+    
+    <th scope="col">TAUX</th>
+    <th scope="col">MODIFIER</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let taxe of taxes._embedded.taxes">
+    <td>{{taxe.taux}}</td>
+    <td><button class="btn btn-warning btn btn-outline-dark ml-1" (click)="modifier(taxe)">
+      <i class="fa fa-pencil-square-o" ></i></button>
+    </td>
+    </tr>
+     </tbody>
+     </table>
+ </div>
+ </div>

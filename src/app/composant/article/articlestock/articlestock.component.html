@@ -1,0 +1,76 @@
+
+<br>
+<mat-toolbar color="dark"></mat-toolbar>
+<br>
+   <mat-toolbar color="dark">  
+    <div>
+      <br>
+        <form [formGroup]="formtemplate" (submit)="chercher(formtemplate.value)"> 
+            <div class="form-group">
+                <div class="form-group">
+                    <div class="form-group">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Magasin</mat-label>
+                            <mat-select class="form-control" formControlName="mag" >
+                              <mat-option *ngFor="let p of magasins._embedded.magasins" [value]="p.id">{{p.libelle}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                    </div>
+                </div>
+                <label>Article</label>
+                <input  type="text"  class="form-control" formControlName="nom"  placeholder="intitulé de l'article">
+                <button type="submit" class="btn btn-success">VALIDATED</button>
+            </div>
+          </form>
+    </div>   
+  </mat-toolbar>
+  <mat-toolbar color="dark"></mat-toolbar>
+  <br>
+ <div  *ngIf="articles else loading" class="pricing-header mx-auto"> 
+   <div class="table-responsive">
+    <table class="table table-bordered table-responsive-sm table-responsive-md table-responsive-lg">
+    <thead>
+    <tr>
+    <th scope="col">Code</th>
+    <th scope="col">Libelle </th>
+    <th scope="col">Prix Achat</th>
+    <th scope="col">Prix Min</th>
+    <th scope="col">Prix Max</th>
+    <th scope="col">Prix Vente </th>
+    <th scope="col">Qté seuil </th>
+    <th scope="col">Stock initial </th>
+    <th scope="col">Stock ajouté</th>
+    <th scope="col">Stock actuelle </th>
+    <th scope="col">TVa </th>
+    
+    
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let article of articles ">
+    <td>{{article.code}}</td>
+    <td>{{article.libelle}}</td>
+    <td>{{article.pa}}</td>
+    <td>{{article.pmin}}</td>
+    <td>{{article.pmax}}</td>
+    <td>{{article.pv}}</td>
+    <td ><button >{{article.fodec}}</button></td>
+    <td>{{article.stkinit}}</td>
+    <td>{{article.stkajouter}}</td>
+    <td ><button [ngClass]= "article.dispo==true?'btn btn-success':'btn btn-danger'" >{{article.stock}}</button></td>
+    <td>{{article.tva}}</td>
+    
+    
+    </tr>
+    </tbody>
+    </table>
+  </div>
+ </div>
+ 
+ <ng-template #loading>
+  <div>Loading...</div>
+ </ng-template>
+
+
+

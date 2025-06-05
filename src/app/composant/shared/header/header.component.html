@@ -1,0 +1,57 @@
+ 
+<header class="header dark-bg">
+  
+  <!--logo start-->
+  <a href="" class="logo">S<span class="lite">Commercial</span></a>
+  
+  <!--logo end-->
+  
+  <div class="top-nav notification-row">
+    <!-- notificatoin dropdown start-->
+    <ul class="nav pull-right top-menu">
+
+      
+      <!-- task notificatoin end -->
+      <!-- inbox notificatoin start-->
+      
+      <!-- inbox notificatoin end -->
+      <!-- alert notification start-->
+      
+      <!-- alert notification end-->
+      <!-- user login dropdown start-->
+      <li class="dropdown">
+        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+          <span class="username" translate>setting.langue</span>            
+        </a>
+        <ul class="dropdown-menu extended">
+          
+          
+          <li>
+            <a (click)="changer('fr')">FR</a>
+          </li>
+          <li>
+            <a (click)="changer('en')"> EN</a>
+          </li>
+        </ul>
+        
+      </li>
+      <!-- user login dropdown end -->
+      <li class="dropdown">
+        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+          <span class="username">{{name}}</span>            
+        </a>
+        <ul class="dropdown-menu extended">
+          
+          
+          <li>
+            <a (click)="logout()" class="logo"><i class="fas fa-power-off"></i>Log out</a>
+          </li>
+          
+        </ul>
+        
+      </li>
+    </ul>
+    <!-- notificatoin dropdown end-->
+    
+  </div>
+</header>

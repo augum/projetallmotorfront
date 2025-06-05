@@ -1,0 +1,9 @@
+{
+  
+    "/api/": {
+      
+      "target": "http://68.66.193.161:8080/boutique-0.0.1-SNAPSHOT",
+      "secure": false
+    }
+  }
+  

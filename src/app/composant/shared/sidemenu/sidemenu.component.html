@@ -1,0 +1,139 @@
+
+<mat-nav-list id="sidebar" class="bg">
+  <ul class="list-unstyled components">
+    <li>
+        <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" translate><i class="fa fa-database"></i>setting.depot</a>
+        <ul class="collapse list-unstyled" id="homeSubmenu1">
+            <li >
+                <a routerLink ="/commandemag" translate><i class="fa fa-address-book-o" ></i>sidemenu.bonl</a>
+            </li>
+            <li>
+                <a routerLink ="/lcommag" translate><i class="fa fa-address-card-o" ></i>sidemenu.listebonl</a>
+            </li>
+        </ul>
+    </li>
+    <li *ngIf="role=='Depot'"  >
+        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" translate><i class="fa fa-database"></i>setting.depot</a>
+        <ul class="collapse list-unstyled" id="homeSubmenu">
+            <li >
+                <a routerLink ="/commandemag" translate><i class="fa fa-address-book-o" ></i>sidemenu.bonl</a>
+            </li>
+        </ul>
+    </li>
+    <li *ngIf="role=='admin'||'Superadmin'||role=='Manager'||role=='Depot'">
+        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" translate><i class="fa fa-laptop"></i>setting.produit</a>
+        <ul class="collapse list-unstyled" id="pageSubmenu">
+            
+            <li *ngIf="role=='admin'">
+                <a routerLink ="/listecategorie" translate><i class="fa fa-folder"></i>sidemenu.categorie</a>
+            </li>
+            <li *ngIf="role=='admin'">
+                <a routerLink ="/listesouscategorie" translate><i class="fa fa-folder-open"></i>sidemenu.souscategorie</a>
+            </li>
+            <li *ngIf="role=='admin'||role=='Depot'">
+                <a routerLink ="/listearticle" translate><i class="fa fa-motorcycle"></i>sidemenu.produitc</a>
+            </li>
+            <li *ngIf="role=='Superadmin'||role=='Manager'" >
+                <a routerLink="/listearticlesupadm" translate><i class=" fa fa-calendar-check-o"></i>sidemenu.artsupadm</a>
+            </li>
+            <li *ngIf="role=='Superadmin'||role=='Manager'" >
+                <a  routerLink="/prixmodgen1" translate><i class="fa fa-calendar fa-lg"></i>sidemenu.modprix</a>
+            </li>
+        </ul>
+    </li>
+    <li *ngIf="role=='Manager'||role=='admin'" >
+      <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" translate><i class="fa fa-cogs"></i>setting.admin</a>
+      <ul class="collapse list-unstyled" id="adminSubmenu">
+          <li *ngIf="role=='Manager'">
+              <a routerLink ="/userlist" translate >sidemenu.utilisateur</a>
+          </li>
+          <li *ngIf="role=='Manager'">
+              <a routerLink ="/magasin" translate>sidemenu.magasin</a>
+          </li>
+          <li *ngIf="role=='admin'">
+              <a routerLink="/listeclient" translate>sidemenu.client</a>
+          </li>
+          <li *ngIf="role=='Manager'" >
+            <a routerLink="/taux" translate><i class=" fa fa-calendar-check-o"></i>sidemenu.taux</a>
+          </li>
+          
+      </ul>
+   </li>
+   <li *ngIf="role=='User'||role=='admin'">
+    <a href="#comptoirSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" translate><i class="fa fa-shopping-cart"></i>setting.comptoir</a>
+    <ul class="collapse list-unstyled" id="comptoirSubmenu">
+        <li *ngIf="role=='User'">
+            <a routerLink ="/commande" translate>sidemenu.fa</a> 
+        </li>
+        <li *ngIf="role=='User'">
+            <a routerLink ="/livraison" translate>sidemenu.proformat </a>
+        </li>
+        <li *ngIf="role=='admin'">
+            <a routerLink ="/bcommande" translate>sidemenu.bon</a> 
+        </li>
+    
+        <li *ngIf="role=='User'||role=='admin'" >
+            <a routerLink ="/articlestock" translate>sidemenu.fiche</a>
+        </li> 
+        
+        
+    </ul>
+ </li>
+ <li >
+    <a href="#rapportSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" translate><i class="fa fa-print "></i>setting.rapport</a>
+    <ul class="collapse list-unstyled" id="rapportSubmenu">
+        <li *ngIf="role=='User'">
+            <a routerLink ="/lcomm" translate>sidemenu.listefa</a>
+            
+        </li>
+        <li *ngIf="role=='Depot'||role=='Manager'||role=='admin'">
+            <a routerLink ="/lcommag" translate>sidemenu.listebonl</a>
+            
+        </li>
+        <li *ngIf="role=='admin'">
+            <a routerLink ="/lbcommande" translate>sidemenu.listeco</a> 
+        </li>
+        <li *ngIf="role=='Manager'||role=='Depot'">
+            <a routerLink ="/depotbc" translate>sidemenu.bcdepot</a> 
+            
+        </li> 
+        <li *ngIf="role=='Manager'" >
+            <a routerLink ="/lcommi" translate>sidemenu.Rapportv</a>
+            
+        </li>
+        <li *ngIf="role=='Manager'" >
+            <a routerLink ="/detailcomm" translate>sidemenu.detailcomm</a>   
+        </li>
+        <li *ngIf="role=='User'" >
+            <a routerLink ="/llivr" translate>sidemenu.listepro</a>
+        </li>
+        <li *ngIf="role=='admin'||role=='Manager'||role=='Caissier'" >
+            <a routerLink ="/rappopro" translate>sidemenu.proadrap</a>
+        </li>
+        <li *ngIf="role=='admin'" >
+            <a routerLink="/commp" translate><i class="	fa fa-calendar-check-o"></i>sidemenu.facture</a>
+        </li> 
+        <li *ngIf="role=='admin'">
+            <a routerLink="/fs" translate><i class=" fa fa-calendar-check-o"></i>sidemenu.negocie</a>
+        </li>
+        <li *ngIf="role=='admin'||role=='Caissier'">
+            <a routerLink="/rappaorventegen" translate><i class=" fa fa-calendar-check-o"></i>sidemenu.rapventeg</a>
+        </li>
+        <li *ngIf="role=='admin'||role=='Manager'" >
+            <a routerLink="/factentreprise" translate><i class=" fa fa-calendar-check-o"></i>sidemenu.convention</a>
+        </li> 
+        
+        <li *ngIf="role=='admin'||role=='Manager'||role=='User'">
+            <a routerLink="/facnom" translate><i class=" fa fa-calendar-check-o"></i>sidemenu.facnom</a>
+        </li>  
+        <li *ngIf="role=='Superadmin'||role=='Manager'" >
+            <a  routerLink="/suppfact" translate><i class="fa fa-trash fa-lg"></i>sidemenu.supfac</a>
+        </li>
+        
+    </ul>
+ </li>
+ 
+</ul>
+</mat-nav-list>
+
+

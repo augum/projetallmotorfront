@@ -1,0 +1,46 @@
+<br>
+<mat-toolbar color="dark"></mat-toolbar>
+   <mat-toolbar color="dark">
+    <form [formGroup]="formtemplate" (submit)="chercher(formtemplate.value)"> 
+
+      <div class="form-group">
+          
+          <input  type="text"  class="form-control" formControlName="nom"  placeholder="Nom du client">
+          <div class="text-danger" *ngIf="isSubmitted && formControls.nom.errors?.required">Veuillez mentionner le nom du client</div>
+          <button type="submit" class="btn btn-success">VALIDATED</button>
+      </div>
+  </form>
+  </mat-toolbar>
+<div *ngIf="comms" class="pricing-header mx-auto">
+    <div class="table-responsive">
+     <table class="table table-bordered table-responsive-sm table-responsive-md table-responsive-lg">
+     <thead>
+     <tr>
+     <th scope="col">Date</th>
+     <th scope="col">Numero</th>
+     <th scope="col">Nom client</th>
+     <th scope="col">Total à payer</th>
+     <th scope="col">Montant payé</th>
+     <th scope="col">Reste</th>
+     <th scope="col">Editer </th>
+     </tr>
+     </thead>
+     <tbody>
+ 
+     <tr *ngFor="let comm of comms | paginate: { itemsPerPage: 50, currentPage: p }">
+     <td>{{comm.date}}</td>
+     <td>{{comm.numero}}</td>
+     <td>{{comm.lib_client}}</td>
+     <td>{{comm.totttc}}</td>
+     <td>{{comm.mt}}</td>
+     <td>{{comm.reste}}</td>
+     <td><button class="btn btn-warning btn btn-outline-dark ml-1" (click)="payer(comm)" >
+       <i class="fa fa-pencil-square-o" ></i></button>
+     </td>
+     </tr>
+     </tbody>
+     </table>
+   </div>
+   <pagination-controls (pageChange)="p = $event"></pagination-controls>
+   <button  class="btn btn-primary" (click)="getActes()">Tout voir</button>
+  </div>

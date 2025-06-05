@@ -1,0 +1,271 @@
+<mat-toolbar color="dark"></mat-toolbar>
+<mat-toolbar color="dark">
+  <div fxHide.gt-xs>
+    <button mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+<div fxLayoutAlign="end" *ngIf="commandeListe">
+  <div class="form-group col-md-4" *ngIf="somme">
+    <button class="btn btn-primary btn-lg">
+      <strong>
+        TOTAL: {{ somme | number: '1.2-2' }} CDF /
+        {{ somme / dollar | number: '1.2-2' }} USD
+      </strong>
+    </button>
+  </div>
+  <div class="form-group col-md-4" *ngIf="interne">
+    <button class="btn btn-success btn-lg">
+      <strong>
+        VENTE INTERNE : {{ interne }} CDF /
+        {{ interne / dollar | number: '1.2-2' }} USD
+      </strong>
+    </button>
+  </div>
+  <div class="form-group col-md-4" *ngIf="somme1">
+    <button class="btn btn-danger btn-lg">
+      <strong>
+        VENTE EXTERNE : {{ somme1 }} CDF /
+        {{ somme1 / dollar | number: '1.2-2' }} USD
+      </strong>
+    </button>
+  </div>
+</div>
+<div *ngIf="rapport">
+  <div>
+    <button class="btn btn-danger" (click)="print()">
+      <i class="fa fa-print"></i>
+    </button>
+    <h2>RAPPORT DE VENTE</h2>
+  </div>
+  <mat-toolbar color="dark">
+    <div fxLayoutAlign="end">
+      <button class="btn btn-primary" (click)="report()">Détail</button>
+    </div>
+  </mat-toolbar>
+
+  <form [formGroup]="formtemplate" (submit)="chercher(formtemplate.value)">
+    <div class="form-group col-md-3">
+      <label><strong>Date début:</strong></label>
+      <input type="date" class="form-control" formControlName="date1" />
+      <div
+        class="text-danger"
+        *ngIf="isSubmitted && formControls.date1.errors?.required"
+      >
+        Champ obligatoire.
+      </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label><strong>Date fin:</strong></label>
+      <input type="date" class="form-control" formControlName="date2" />
+      <div
+        class="text-danger"
+        *ngIf="isSubmitted && formControls.date2.errors?.required"
+      >
+        Champ obligatoire.
+      </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label><strong>Boutique:</strong></label>
+      <select class="form-control" formControlName="magasin">
+        <option value="0">-select-</option>
+        <option
+          *ngFor="let magasin of magasins._embedded.magasins"
+          value="{{ magasin.id }}"
+        >
+          {{ magasin.libelle }}
+        </option>
+      </select>
+      <div
+        class="text-danger"
+        *ngIf="isSubmitted && formControls.magasin.errors?.required"
+      >
+        Champ obligatoire.
+      </div>
+    </div>
+
+    <div class="form-group col-md-3">
+      <label><strong>Mode de paiement:</strong></label>
+      <select class="form-control" formControlName="payement">
+        <option value="cash">Cash</option>
+        <option value="banque">Banque</option>
+        <option value="mobil money">Mobil Money</option>
+        <option value="credit">Crédit</option>
+        <option value="point de vente">Point de vente</option>
+      </select>
+      <div
+        class="text-danger"
+        *ngIf="isSubmitted && formControls.payement.errors?.required"
+      ></div>
+      <br />
+      <button type="submit" class="btn btn-success">VALIDATED</button>
+    </div>
+  </form>
+  <p>OU</p>
+  <form [formGroup]="formtemplate" (submit)="chercherNum(formtemplate.value)">
+    <div class="form-group col-md-3">
+      <label><strong>Numéro facture:</strong></label>
+      <input type="text" class="form-control" formControlName="numero" />
+      <br />
+      <button type="submit" class="btn btn-success">CHERCHER</button>
+    </div>
+  </form>
+  <table class="table table-hover">
+    <thead class="thead-light">
+      <th>numero</th>
+      <th>Date commande</th>
+      <th>Code client</th>
+      <th>Désignation client</th>
+      <th>Total Ht</th>
+      <th>Total Tva</th>
+      <th>Total TTC</th>
+      <th></th>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let comm of commandeListe">
+        <td>{{ comm.numero }}</td>
+        <td>{{ comm.date | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ comm.code_client }}</td>
+        <td>{{ comm.lib_client }}</td>
+        <td>{{ comm.totht }}</td>
+        <td>{{ comm.tottva }}</td>
+        <td>{{ comm.totttc }}</td>
+        <td>
+          <a class="btn text-danger" (click)="onDetail(comm)"><i>Détails</i></a>
+        </td>
+      </tr>
+      <div class="row">
+        <div class="col-sm-12 col-md-5">
+          <div
+            class="dataTables_info"
+            id="dataTable_info"
+            role="status"
+            aria-live="polite"
+          ></div>
+        </div>
+        <div class="col-sm-12 col-md-7">
+          <div
+            class="dataTables_paginate paging_simple_numbers"
+            id="dataTable_paginate"
+          >
+            <ul class="pagination"></ul>
+          </div>
+        </div>
+      </div>
+    </tbody>
+  </table>
+  <!--<pagination-controls (pageChange)="p = $event"></pagination-controls>-->
+  <div *ngIf="commandeListe">
+    <div class="form-group col-md-4" *ngIf="somme">
+      <button class="btn btn-primary btn-lg">
+        <strong>
+          TOTAL: {{ somme | number: '1.2-2' }} CDF /
+          {{ somme / dollar | number: '1.2-2' }} USD
+        </strong>
+      </button>
+    </div>
+    <div class="form-group col-md-4" *ngIf="interne">
+      <button class="btn btn-success btn-lg">
+        <strong>
+          VENTE INTERNE : {{ interne }} CDF /
+          {{ interne / dollar | number: '1.2-2' }} USD
+        </strong>
+      </button>
+    </div>
+    <div class="form-group col-md-4" *ngIf="somme1">
+      <button class="btn btn-danger btn-lg">
+        <strong>
+          VENTE EXTERNE : {{ somme1 }} CDF /
+          {{ somme1 / dollar | number: '1.2-2' }} USD
+        </strong>
+      </button>
+    </div>
+  </div>
+</div>
+<div *ngIf="!rapport">
+  <mat-toolbar color="dark">
+    <div fxLayoutAlign="end">
+      <button class="btn btn-primary" (click)="report2()">Synthèse</button>
+    </div>
+  </mat-toolbar>
+  <form [formGroup]="formtemplate1" (submit)="detailVente(formtemplate1.value)">
+    <div class="form-group col-md-3">
+      <label><strong>Date début:</strong></label>
+      <input type="date" class="form-control" formControlName="date3" />
+    </div>
+    <div class="form-group col-md-3">
+      <label><strong>Date fin:</strong></label>
+      <input type="date" class="form-control" formControlName="date4" />
+    </div>
+
+    <div class="form-group col-md-3">
+      <button type="submit" class="btn btn-success">VALIDATED</button>
+    </div>
+  </form>
+
+  <!--<form [formGroup]="formtemplate" (submit)="synthese(formtemplate.value)"> 
+        <div class="form-group col-md-3">
+            <label><strong>Date début: </strong></label>
+            <input  type="date"  class="form-control" formControlName="date3" >
+            
+        </div>
+        <div class="form-group col-md-3">
+            <label><strong>Date fin: </strong></label>
+            <input  type="date"  class="form-control" formControlName="date4" >
+            <br>
+            <button type="submit" class="btn btn-success">VALIDATED</button>
+        </div>
+    </form>-->
+  <table class="table table-hover">
+    <thead class="thead-light">
+      <th>Produit</th>
+      <th>Qty</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let resumes of resume">
+        <td>{{ resumes.libart }}</td>
+        <td>{{ resumes.total }}</td>
+
+        <td></td>
+      </tr>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-5">
+          <div
+            class="dataTables_info"
+            id="dataTable_info"
+            role="status"
+            aria-live="polite"
+          ></div>
+        </div>
+        <div class="col-sm-12 col-md-7">
+          <div
+            class="dataTables_paginate paging_simple_numbers"
+            id="dataTable_paginate"
+          >
+            <ul class="pagination"></ul>
+          </div>
+        </div>
+      </div>
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+  <div class="form-group col-md-4" *ngIf="somme">
+    <button class="btn btn-primary">
+      <strong>TOTAL: {{ somme }} CDF</strong>
+    </button>
+  </div>
+  <div class="form-group col-md-4" *ngIf="interne">
+    <button class="btn btn-success">
+      <strong>VENTE INTERNE : {{ interne }} CDF</strong>
+    </button>
+  </div>
+  <div class="form-group col-md-4" *ngIf="somme1">
+    <button class="btn btn-danger">
+      <strong>VENTE EXTERNE : {{ somme1 }} CDF</strong>
+    </button>
+  </div>
+</div>

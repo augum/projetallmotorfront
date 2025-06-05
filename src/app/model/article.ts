@@ -1,0 +1,20 @@
+export class Article {
+     id:number;
+     code:string;
+     libelle:string;
+     pa:number;
+     pmin:number;
+     pmax:number;
+     tva:number;
+     fodec:number;
+     pv:number;
+     stock:number;
+     stkinit:number;
+     stkajouter:number;
+     image:string;
+     codeCateg:any;
+     codeScateg:any;
+     idMagasin:any;
+     dispo:boolean;
+     local:string;
+}

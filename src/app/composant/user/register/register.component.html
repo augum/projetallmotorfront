@@ -1,0 +1,74 @@
+
+<body class="bg-gradient-primary">
+  <mat-toolbar color="dark">
+    <button class="btn btn-danger btn-user d-flex mr-auto p-2" (click)="quitter()">Quitter</button>
+  </mat-toolbar>
+    <div class="container">
+    <div class="row justify-content-center">
+    <div class="col-xl-10 col-lg-10 col-md-8">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card-body p-0">
+    <div class="row">
+    
+    <div class="col-lg-12">
+    <div class="p-5">
+    <div class="text-center">
+    <h1 class="h4 text-gray-900 mb-4">Register</h1>
+    </div>
+    <form class = "user" [formGroup]="this.crudApi.dataForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <input type="text" class="form-control form-control-user" formControlName="nom" id="nom"
+       placeholder="Votre Nom">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control form-control-user" id="login" formControlName="login"
+       placeholder="Login">    
+    </div>
+    <div class="form-group col">
+     <label>Role  : </label>
+     <select name = "role"  formControlName="role"  class="form-control" id = "role">
+         <option value = "admin">Administrateur</option>
+         <option value = "User">Utilisateur</option>
+         <option value = "Manager">Manager Gérant</option>
+         <option value = "Caissier">Caissier</option> 
+         <option value = "Depot">Gestionnaire dépôt</option>
+         <option value = "Superadmin">Super administrateur</option>
+         
+     </select>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-6 mb-3 mb-sm-0">
+        <input type="password" class="form-control form-control-user" id="pwd" formControlName="pwd" 
+        placeholder="Password">
+      </div> 
+      <div class="col-sm-6">
+        <input type="password" class="form-control form-control-user" id="pwdd" formControlName="pwdd"
+         placeholder="Repeat Password">
+      </div>
+    </div>
+    <div class="form-group" >
+        <label>Magasin</label>
+        <select class="form-control" formControlName="idMagasin" placeholder="Magasin" (change)="OnSelectClient($event.target)" >
+            <option value="0">-select-</option>
+            <option *ngFor="let magasin of magasins._embedded.magasins" value="{{magasin.id}}">{{magasin.libelle}}</option>
+        </select>
+    </div>
+     <button class="btn btn-primary btn-user ">Register Account</button>
+     
+  </form>
+   <hr>
+   
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+   
+</div>
+</div>
+  </body>
+  
+  
+  
+  

@@ -1,0 +1,13 @@
+@import "~@ng-select/ng-select/themes/material.theme.css";
+body{
+    background-image: url(/assets/login/img/login1b.jpg);
+}
+div.scroll
+{
+
+height:500PX;
+FLOAT: left;
+
+padding: 1%;
+overflow:scroll;
+}

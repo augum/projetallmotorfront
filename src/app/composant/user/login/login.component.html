@@ -1,0 +1,40 @@
+<body class="bg-gradient-primary" >
+    <div class="container ">
+    <div class="row">
+    <div class="col-lg-6 border-top-8">
+    <div class="p-5">
+    <div class="text-center margin-top txt-color bg-color">
+      <p>
+        
+          <strong>
+            <h2>Scommercial</h2>
+           </strong>
+      
+    </p>
+    </div>
+    <form class="user">
+      <div class="input-group mb-3">  
+       <div class="input-group-prepend">  
+        <span class="input-group-text"><i class="icon-user">Login</i></span>  
+       </div>  
+       <input type="text" class="form-control sty1" id="loginname" required [(ngModel)]="loginname" 
+       name="loginname" placeholder="Your login" required>
+      </div>  
+      <div class="input-group mb-4">  
+       <div class="input-group-prepend">  
+        <span class="input-group-text"><i class="icon-lock">Password</i></span>  
+       </div>
+        <input type="password" class="form-control sty1" id="password" required [(ngModel)]="password"
+         name="Taper password" placeholder="Password" required>
+       </div>  
+        <button class="btn btn-primary" (click)="login()" ><strong>Connexion</strong></button>
+    </form>
+    </div>
+    </div>
+    </div>
+    </div>
+  </body>
+    
+    
+    
+    
