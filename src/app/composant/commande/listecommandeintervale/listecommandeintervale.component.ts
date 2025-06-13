@@ -7,6 +7,8 @@ import { DatePipe } from '@angular/common';
 import { MagasinService } from 'src/app/services/magasin.service';
 import { LcommandeService } from 'src/app/services/lcommande.service';
 import { Commande } from 'src/app/model/commande';
+import {DetailVente} from 'src/app/model/detailVente';
+
 import pdfMake from 'pdfmake/build/pdfmake';
 import {map} from 'rxjs/operators';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -19,6 +21,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 export class ListecommandeintervaleComponent implements OnInit {
   commandeListe;
   listecom;
+   listecomDetaiel;
   public somme=0;
   public somme1=0;
   public interne=0;
@@ -96,6 +99,7 @@ export class ListecommandeintervaleComponent implements OnInit {
   detailVente(formValue){
     this.lcommservice.getListVente(formValue.date3,formValue.date4).subscribe(
       response =>{this.resume = response;
+        localStorage.setItem("listedetail",JSON.stringify(this.resume));
         console.log(this.resume);
       }
 );
@@ -140,8 +144,16 @@ export class ListecommandeintervaleComponent implements OnInit {
     this.listecom = JSON.parse(localStorage.getItem('listecommande2'));
     this.generatePdf();
   }
+  printDetail(){
+    this.listecomDetaiel = JSON.parse(localStorage.getItem('listedetail'));
+    this.generatePdfDetail();
+  }
   generatePdf(){
     const documant =this.getDocument();
+    pdfMake.createPdf(documant).open();
+  }
+   generatePdfDetail(){
+    const documant =this.getDocumentDetail();
     pdfMake.createPdf(documant).open();
   }
   getDocument(){
@@ -149,13 +161,10 @@ export class ListecommandeintervaleComponent implements OnInit {
       content:[
         
         {
-          text:'ABRO',
+          text:'ALL MOTOR',
           style:'ligne3'
         },
-        {
-          text:'ETS PABCO',
-          style:'ligne3'
-        },
+        
         {
           text:'VENTE PIECES DE RECHANGE ET ACCESSOIRES D ORIGINE',
           style:'ligne2'
@@ -263,6 +272,104 @@ export class ListecommandeintervaleComponent implements OnInit {
       }
     }
   }
+   getDocumentDetail(){
+    return{
+      content:[
+        
+        {
+          text:'ALL MOTOR',
+          style:'ligne3'
+        },
+        
+        {
+          text:'VENTE PIECES DE RECHANGE ET ACCESSOIRES D ORIGINE',
+          style:'ligne2'
+        }
+        ,
+        {
+          text:'TOUTES MARQUES JAPONAISES ET COREENNES',
+          style:'ligne2'
+        }
+        ,
+        {
+          text:'CD/KIN/RCCM/14-A-05398 -Id. Nat. 01-93-N 43402 L N° impot: A0701567 M',
+          style:'ligne2'
+        },
+        {
+          text:'Adresse:  '+ JSON.parse(localStorage.getItem('libmag')).adresse + ' ' + 'Tél:(+243)0999942222',
+          style:'ligne2'
+        },
+         
+        {
+          text:'------------------------------------------------------------------------------------------------------------------------------------',
+          style:'ligne'
+        },
+        {
+          text:'Kinshasa, le'+' ' + new Date().toLocaleDateString(),
+          alignment:'right'
+        },
+        {
+          text:new Date().toLocaleTimeString(),
+          alignment:'right'
+        },
+        
+        {
+          text:'RAPPORT JOURNALIER DE VENTE:',
+          alignment:'center'
+        },
+        this.getListDetail(this.listecomDetaiel),
+        {
+          
+        },
+        
+        
+      ],
+      styles:{
+        header:{
+          fontSize: 18,
+          bold:true,
+          margin:[0,20,0,10],
+          decoration:'underline'
+        },
+        name:{
+          fontsize: 16,
+          bold:true
+        },
+        total:{
+          fontSize:12,
+          bold:true,
+          italics:true
+        },
+        ligne:{
+         fontSize:12,
+         bold:true,
+         italics:true
+       },
+        sign:{
+          margin:[0,50,0,10],
+          alignment:'right',
+          italics:true
+        },
+        ligne3:{
+         fontSize:24,
+         bold:true,
+         italics:false,
+         alignment:'center'
+       },
+        ligne2:{
+         fontSize:10,
+         bold:true,
+         italics:true,
+         alignment:'center'
+       },
+        tableHeader:{
+          bold:true,
+          fontSize:15,
+          alignment:'center'
+        }
+      }
+    }
+  }
   getList(items: Commande[]){
     return{
       table:{
@@ -289,6 +396,30 @@ export class ListecommandeintervaleComponent implements OnInit {
            ],
            ...items.map(ed=>{
              return[ed.numero,ed.lib_client,ed.totttc,ed.modepayement];
+           })
+         ]
+      }
+    }
+  }
+   getListDetail(items: DetailVente[]){
+    return{
+      table:{
+         widths:['*','*'],
+         body:[
+           [
+           {
+             text:'ARTICLE',
+             style:'tableHeader'
+           },
+           {
+             text:'QTTE',
+             style:'tableHeader'
+           },
+           
+           
+           ],
+           ...items.map(ed=>{
+             return[ed.libart,ed.total];
            })
          ]
       }

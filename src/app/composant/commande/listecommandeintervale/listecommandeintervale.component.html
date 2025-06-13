@@ -185,6 +185,9 @@
   </div>
 </div>
 <div *ngIf="!rapport">
+  <button class="btn btn-danger" (click)="printDetail()">
+    <i class="fa fa-print"></i>
+  </button>
   <mat-toolbar color="dark">
     <div fxLayoutAlign="end">
       <button class="btn btn-primary" (click)="report2()">Synthèse</button>

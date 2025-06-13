@@ -321,7 +321,7 @@ getDocument(){
    content:[
      
       {
-        text:'ABRO',
+        text:'AUTO ALL',
         style:'ligne3'
       },
       
@@ -385,21 +385,16 @@ getDocument(){
       style:'header'
     },
     {
-      text: 'Tot. hors taxe: '+(this.facture.totht * JSON.parse(localStorage.getItem('taux')).taux).toFixed(2)  + ' CDF',
+      text: 'Tot. hors taxe: '+this.facture.totht.toFixed(2)  + ' CDF',
       style:'total'
     },
     {
-      text: 'Tva 16%: '+(this.facture.tottva * JSON.parse(localStorage.getItem('taux')).taux).toFixed(2)  + ' CDF',
+      text: 'Tva 16%: '+this.facture.tottva.toFixed(2)  + ' CDF',
       style:'total'
     },
     
     {
-      text:'TOTAL: '+ (this.facture.totttc * JSON.parse(localStorage.getItem('taux')).taux).toFixed(2) + ' CDF',
-      style:'total'
-      
-    },
-    {
-      text:'TOTAL: '+ this.facture.totttc  + 'USD',
+      text:'TOTAL: '+ this.facture.totttc .toFixed(2) + ' CDF',
       style:'total'
       
     },
@@ -491,7 +486,7 @@ return{
       ],
 
       ...items.map(ed=>{
-        return[ed.libart,ed.qte,ed.pu *this.tauxusd,ed.totht *this.tauxusd ];
+        return[ed.libart,ed.qte,ed.pu,ed.totht];
       })
     ],
     alignment:'center',
@@ -508,7 +503,7 @@ return{
  content:[
    
     {
-      text:'ABRO',
+      text:'AUTO ALL',
       style:'ligne3'
     },
     
@@ -572,29 +567,26 @@ return{
     style:'header'
   },
   {
-    text: 'Tot. hors taxe: '+(this.facture.totht).toFixed(2)  + ' USD', 
+    
+    text: 'Tot. hors taxe: '+ (this.facture.totht / JSON.parse(localStorage.getItem('taux')).taux).toFixed(2)  + ' USD', 
     style:'total'
   },
   {
-    text: 'Tva 16%: '+(this.facture.tottva) .toFixed(2)  + ' USD', 
+    text: 'Tva 16%: '+(this.facture.tottva /JSON.parse(localStorage.getItem('taux')).taux).toFixed(2)   + ' USD', 
     style:'total'
   },
   
   {
-    text:'Tot. TTC: ' + (this.facture.totttc ).toFixed(2) + ' USD',
+    text:'Tot. TTC: ' + (this.facture.totttc /JSON.parse(localStorage.getItem('taux')).taux).toFixed(2)  + ' USD',
     style:'total' 
     
   },
   {
-    text:'Montant payé: ' + (this.facture.mt ).toFixed(2) + ' USD',
+    text:'Montant payé: ' + (this.facture.mt /JSON.parse(localStorage.getItem('taux')).taux).toFixed(2)  + ' USD',
     style:'total'
     
   },
-  {
-    text:'Montant payé/CDF: ' + (this.facture.mt * JSON.parse(localStorage.getItem('taux')).taux).toFixed(2) + ' CDF',
-    style:'total'
-    
-  },
+  
   {
     text:'Signature',
     style:'sign',
@@ -683,7 +675,7 @@ table:{
     ],
 
     ...items.map(ed=>{
-      return[ed.libart,ed.qte,ed.pu ,ed.totht ];
+      return[ed.libart,ed.qte,ed.pu / JSON.parse(localStorage.getItem('taux')).taux ,ed.totht/ JSON.parse(localStorage.getItem('taux')).taux ];
     })
   ],
   alignment:'center',
@@ -701,7 +693,7 @@ return{
  content:[
    
     {
-      text:'ABRO',
+      text:'AUTO ALL',
       style:'ligne3'
     },
     
@@ -765,29 +757,25 @@ return{
     style:'header'
   },
   {
-    text: 'Tot. hors taxe: '+(this.facture.totht * JSON.parse(localStorage.getItem('taux')).taux).toFixed(2) + ' CDF',
+    text: 'Tot. hors taxe: '+this.facture.totht.toFixed(2) + ' CDF',
     style:'total'
   },
   {
-    text: 'Tva 16%: '+(this.facture.tottva * JSON.parse(localStorage.getItem('taux')).taux).toFixed(2) + ' CDF',
+    text: 'Tva 16%: '+this.facture.tottva .toFixed(2) + ' CDF',
     style:'total'
   },
   {
-    text: 'Tot. TTC: '+(this.facture.totttc * JSON.parse(localStorage.getItem('taux')).taux).toFixed(2) + ' CDF',
+    text: 'Tot. TTC: '+this.facture.totttc.toFixed(2) + ' CDF',
     style:'total' 
     
   },
   
   {
-    text: 'Montant payé: '+(this.facture.mt * JSON.parse(localStorage.getItem('taux')).taux).toFixed(2) + ' CDF',
+    text: 'Montant payé: '+this.facture.mt.toFixed(2) + ' CDF',
     style:'total'
   },
   {
-    text: 'Montant payé/USD: '+this.facture.mt  + ' USD',
-    style:'total'
-  },
-  {
-    text: 'Reste: '+ ((this.facture.totttc * JSON.parse(localStorage.getItem('taux')).taux) - (this.facture.mt)*JSON.parse(localStorage.getItem('taux')).taux) + ' CDF',
+    text: 'Reste: '+ ((this.facture.totttc) - (this.facture.mt)) + ' CDF',
     style:'total'
   },
   
@@ -880,7 +868,7 @@ table:{
     ],
 
     ...items.map(ed=>{
-      return[ed.libart,ed.qte,ed.pu *this.tauxusd,ed.totht *this.tauxusd ];
+      return[ed.libart,ed.qte,ed.pu,ed.totht];
     })
   ],
   alignment:'center',
@@ -897,7 +885,7 @@ return{
 content:[
  
   {
-    text:'ABRO',
+    text:'ALL MOTOR',
     style:'ligne3'
   },
   
@@ -961,29 +949,26 @@ content:[
   style:'header'
 },
 {
-  text: 'Tot. hors taxe: '+(this.facture.totht ).toFixed(2)  + ' USD', 
+  text: 'Tot. hors taxe: '+(this.facture.totht/ JSON.parse(localStorage.getItem('taux')).taux).toFixed(2)   + ' USD', 
   style:'total'
 },
 {
-  text: 'Tva 16%: '+(this.facture.tottva ).toFixed(2)  + ' USD', 
+  text: 'Tva 16%: '+(this.facture.tottva / JSON.parse(localStorage.getItem('taux')).taux).toFixed(2)   + ' USD', 
   style:'total'
 },
 
 {
-  text:'Tot. TTC: ' + (this.facture.totttc ).toFixed(2) + ' USD',
+  text:'Tot. TTC: ' + (this.facture.totttc /  JSON.parse(localStorage.getItem('taux')).taux).toFixed(2) + ' USD',
   style:'total'
   
 },
 {
-  text:'Montant payé: ' + (this.facture.mt).toFixed(2) + ' USD',
+  text:'Montant payé: ' + (this.facture.mt / JSON.parse(localStorage.getItem('taux')).taux).toFixed(2) + ' USD',
   style:'total' 
   },
+  
   {
-    text:'Montant payé: ' + (this.facture.mt * JSON.parse(localStorage.getItem('taux')).taux).toFixed(2) + ' USD',
-    style:'total' 
-    },
-  {
-    text: 'Reste: '+ ((this.facture.totttc - this.facture.mt)).toFixed(2) + ' USD',
+    text: 'Reste: '+ ((((this.facture.totttc ) - this.facture.mt)) / JSON.parse(localStorage.getItem('taux')).taux).toFixed(2) + ' USD',
     style:'total'
   },
 {
